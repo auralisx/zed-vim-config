@@ -7,252 +7,92 @@
 // from the command palette.
 [
   {
-    "context": "Workspace",
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
     "bindings": {
-      // "shift shift": "file_finder::Toggle"
-    }
-  },
-  // Better escape
-  {
-    "context": "Editor && vim_mode == insert && !menu",
-    "bindings": {
-      "j j": "vim::NormalBefore", // remap jj in insert mode to escape
-      "j k": "vim::NormalBefore" // remap jk in insert mode to escape
-    }
-  },
-  {
-    "context": "Editor",
-    "bindings": {
-      // "j k": ["workspace::SendKeystrokes", "escape"]
+      // Traditional Vim behavior
+      "q": "vim::AnyQuotes",
+      "b": "vim::AnyBrackets",
+
+      // mini.ai plugin behavior
+      "Q": "vim::MiniQuotes",
+      "B": "vim::MiniBrackets"
     }
   },
   {
-    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
+    "context": "VimControl && !menu",
     "bindings": {
-      // put key-bindings here if you want them to work in normal & visual mode
-      // Git
-      "space g h d": "editor::ToggleHunkDiff",
-      "space g h r": "editor::RevertSelectedHunks",
-
-      // Open markdown preview
-      "space m p": "markdown::OpenPreview",
-      "space m P": "markdown::OpenPreviewToTheSide",
-
-      // Open recent project
-      "space f p": "projects::OpenRecent",
-      // Search word under cursor
-      "space s w": "pane::DeploySearch",
-
-      // Chat with AI
-      "space a c": "assistant::ToggleFocus",
-      // Go to file with `gf`
-      "g f": "editor::OpenExcerpts"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
-    "bindings": {
-      // put key-bindings here if you want them to work only in normal mode
-      // Window movement bindings
-      // Ctrl jklk to move between panes
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
-
-      // +LSP
-      "space c a": "editor::ToggleCodeActions",
-      "space .": "editor::ToggleCodeActions",
-      "space c r": "editor::Rename",
-      "g d": "editor::GoToDefinition",
-      "g D": "editor::GoToDefinitionSplit",
-      "g i": "editor::GoToImplementation",
-      "g I": "editor::GoToImplementationSplit",
-      "g t": "editor::GoToTypeDefinition",
-      "g T": "editor::GoToTypeDefinitionSplit",
-      "g r": "editor::FindAllReferences",
-      "] d": "editor::GoToDiagnostic",
-      "[ d": "editor::GoToPrevDiagnostic",
-      // TODO: Go to next/prev error
-      "] e": "editor::GoToDiagnostic",
-      "[ e": "editor::GoToPrevDiagnostic",
-      // Symbol search
-      "s s": "outline::Toggle",
-      "s S": "project_symbols::Toggle",
-      // Diagnostic
-      "space x x": "diagnostics::Deploy",
-
-      // +Git
-      // Git prev/next hunk
-      "] h": "editor::GoToHunk",
-      "[ h": "editor::GoToPrevHunk",
-
-      // + Buffers
-      // Switch between buffers
-      "shift-tab": "pane::ActivatePrevItem",
-      "tab": "pane::ActivateNextItem",
-      // Close active panel
-      "shift-q": "pane::CloseActiveItem",
-      "ctrl-q": "pane::CloseActiveItem",
-      "space b d": "pane::CloseActiveItem",
-      // Close other items
-      "space b o": "pane::CloseInactiveItems",
-      // Save file
-      "ctrl-s": "workspace::Save",
-      // File finder
+      // Put key bindings here if you want them to work in normal & visual mode.
       "space space": "file_finder::Toggle",
-      // TODO: Open other files
-      // Show project panel with current file
       "space e": "pane::RevealInProjectPanel"
     }
   },
-  // Empty pane, set of keybindings that are available when there is no active editor
+  {
+    "context": "vim_mode == normal && !menu",
+    "bindings": {
+      "shift-y": ["workspace::SendKeystrokes", "y $"] // Use neovim's yank behavior: yank to end of line.
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
+      "k j": "vim::NormalBefore", // In insert mode, make kj escape to normal mode.
+      "j j": "vim::NormalBefore" // In insert mode, make jj escape to normal mode.
+    }
+  },
   {
     "context": "EmptyPane || SharedScreen",
     "bindings": {
-      // Open file finder
-      "space space": "file_finder::Toggle",
-      // Open recent project
-      "space f p": "projects::OpenRecent"
+      // Put key bindings here (in addition to the context above) if you want them to
+      // work when no editor exists.
+      "space space": "file_finder::Toggle"
     }
   },
   {
-    "context": "Terminal",
+    "context": "Editor && vim_mode == normal && !menu",
     "bindings": {
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem"
     }
   },
-  // File panel (netrw)
   {
-    "context": "ProjectPanel && not_editing",
+    "context": "Dock",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+
+      "space e": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-c": "editor::Copy",
+      // "ctrl-x": "editor::Cut",
+      "ctrl-v": "editor::Paste",
+      "ctrl-z": "editor::Undo",
+      "ctrl-a": "editor::SelectAll",
+      "ctrl-o": "workspace::Open"
+    }
+  },
+  {
+    "context": "Picker > Editor",
+    "bindings": {
+      "ctrl-y": "picker::ConfirmCompletion"
+    }
+  },
+  {
+    "context": "(ProjectPanel && not_editing)",
     "bindings": {
       "a": "project_panel::NewFile",
-      "A": "project_panel::NewDirectory",
-      "r": "project_panel::Rename",
-      "d": "project_panel::Delete",
-      "x": "project_panel::Cut",
-      "c": "project_panel::Copy",
-      "p": "project_panel::Paste",
-      // Close project panel as project file panel on the right
-      "q": "workspace::ToggleRightDock",
-      "space e": "workspace::ToggleRightDock",
-      // Navigate between panel
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
-    }
-  },
-  {
-    "context": "Editor && VimControl && !VimWaiting && !menu",
-    "bindings": {
-      "ctrl-w z": "workspace::ToggleZoom",
-      "ctrl-w t": "terminal_panel::ToggleFocus",
-      "g r": "editor::FindAllReferences",
-      "shift-k": "editor::Hover",
-      "space l a": "editor::ToggleCodeActions",
-      "space l r": "editor::Rename",
-      "space l f": "editor::Format",
-      "space l l": "diagnostics::Deploy",
-      "g c c": "editor::ToggleComments",
-      "space f": "file_finder::Toggle",
-      "space o": "tab_switcher::Toggle",
-      "space e": "workspace::ToggleLeftDock",
-      "space p": "outline::Toggle",
-      "space v": "editor::GoToDefinitionSplit"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == insert && !menu",
-    "bindings": {
-      "j j": "vim::NormalBefore"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
-    "bindings": {
-      "shift-j": "editor::MoveLineDown",
-      "shift-k": "editor::MoveLineUp"
-    }
-  },
-  {
-    "context": "Terminal",
-    "bindings": {
-      "ctrl-w z": "workspace::ToggleZoom",
-      "ctrl-w t": "terminal_panel::ToggleFocus"
-    }
-  },
-  {
-    "context": "Editor",
-    "bindings": {
-      "super-[": "editor::Outdent",
-      "super-]": "editor::Indent",
-      "super-alt-up": "editor::AddSelectionAbove",
-      "super-ctrl-p": "editor::AddSelectionAbove",
-      "super-alt-down": "editor::AddSelectionBelow",
-      "super-ctrl-n": "editor::AddSelectionBelow",
-      "super-d": [
-        "editor::SelectNext",
-        {
-          "replace_newest": false
-        }
-      ],
-      "ctrl-super-d": [
-        "editor::SelectPrevious",
-        {
-          "replace_newest": false
-        }
-      ],
-      "super-k super-d": [
-        "editor::SelectNext",
-        {
-          "replace_newest": true
-        }
-      ],
-      "super-k ctrl-super-d": [
-        "editor::SelectPrevious",
-        {
-          "replace_newest": true
-        }
-      ],
-      "super-/": [
-        "editor::ToggleComments",
-        {
-          "advance_downwards": false
-        }
-      ],
-      "alt-up": "editor::SelectLargerSyntaxNode",
-      "alt-down": "editor::SelectSmallerSyntaxNode",
-      "super-u": "editor::UndoSelection",
-      "super-shift-u": "editor::RedoSelection",
-      "f8": "editor::GoToDiagnostic",
-      "shift-f8": "editor::GoToPrevDiagnostic",
-      "f2": "editor::Rename",
-      "f12": "editor::GoToDefinition",
-      "alt-f12": "editor::GoToDefinitionSplit",
-      "super-f12": "editor::GoToTypeDefinition",
-      "alt-super-f12": "editor::GoToTypeDefinitionSplit",
-      "alt-shift-f12": "editor::FindAllReferences",
-      "ctrl-m": "editor::MoveToEnclosingBracket",
-      "alt-super-[": "editor::Fold",
-      "alt-super-]": "editor::UnfoldLines",
-      "ctrl-space": "editor::ShowCompletions",
-      "super-.": "editor::ToggleCodeActions"
-    }
-  },
-  {
-    "context": "Editor && !menu",
-    "bindings": {
-      "ctrl-c": "editor::Copy", // vim default: return to normal mode
-      "ctrl-x": "editor::Cut", // vim default: decrement
-      "ctrl-v": "editor::Paste", // vim default: visual block mode
-      "ctrl-y": "editor::Undo", // vim default: line up
-      "ctrl-f": "buffer_search::Deploy", // vim default: page down
-      "ctrl-o": "workspace::Open", // vim default: go back
-      "ctrl-a": "editor::SelectAll" // vim default: increment
+      "shift-a": "project_panel::NewDirectory"
     }
   },
   {
@@ -265,13 +105,22 @@
     }
   },
   {
-    "context": "Dock",
+    "context": "vim_mode == visual",
     "bindings": {
-      "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"]
-      // ... or other keybindings
+      "shift-s": "vim::PushAddSurrounds"
+    }
+  },
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-x": "vim::Exchange"
     }
   }
 ]

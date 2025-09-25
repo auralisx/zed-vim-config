@@ -8,15 +8,17 @@
 // from the command palette
 {
   "features": {
-    "inline_completion_provider": "supermaven"
+    "edit_prediction_provider": "zed"
   },
   "base_keymap": "VSCode",
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "ui_font_size": 14,
+  "buffer_font_size": 14,
+  "ui_font_family": "FiraCode Nerd Font",
+  "buffer_font_family": "FiraCode Nerd Font",
   "theme": {
     "mode": "system",
     "light": "Tokyo Night",
-    "dark": "One Dark"
+    "dark": "Tokyo Night"
   },
   "autosave": "on_window_change",
   "tab_bar": {
@@ -29,23 +31,6 @@
   "inlay_hints": {
     "enabled": true
   },
-  "languages": {
-    // Refer https://zed.dev/docs/languages/javascript and https://zed.dev/docs/languages/typescript for more info
-    "TypeScript": {
-      // Refer https://github.com/jellydn/ts-inlay-hints for how to setup for Neovim and VSCode
-      "inlay_hints": {
-        "enabled": true,
-        "show_parameter_hints": false,
-        "show_other_hints": true,
-        "show_type_hints": true
-      }
-    },
-    "Python": {
-      "format_on_save": { "language_server": { "name": "ruff" } },
-      "formatter": { "language_server": { "name": "ruff" } },
-      "language_servers": ["pyright", "ruff"]
-    }
-  },
   "terminal": {
     "shell": {
       "program": "fish"
@@ -56,32 +41,41 @@
     "diagnostics": false,
     "metrics": false
   },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": true
+    },
+    "hunk_style": "staged_hollow"
+  },
+  "git_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "dock": "right"
+  },
+  "project_panel": {
+    "dock": "right",
+    "git_status": true
+  },
   // Disable cursor blink
   "cursor_blink": false,
   // Hide the scroll bar
   "scrollbar": {
-    "show": "auto",
-    "cursors": true,
-    "git_diff": true,
-    "search_results": true,
-    "selected_symbol": true,
-    "diagnostics": true
+    "show": "never"
   },
   // Prevent the buffer from scrolling beyond the last line
   "scroll_beyond_last_line": "off",
   // Allow the cursor to reach the edges of the screen
   "vim_mode": true,
-  "vertical_scroll_margin": 5,
+  "vertical_scroll_margin": 8,
   // Use relative line numbers
   "relative_line_numbers": true,
-  "command_aliases": {
-    "W": "w",
-    "Wq": "wq",
-    "Q": "q"
-  },
   "vim": {
-    "use_system_clipboard": "always",
-    "use_multiline_find": true,
+    "use_system_clipboard": "on_yank",
     "use_smartcase_find": true,
     "toggle_relative_line_numbers": true
   }
