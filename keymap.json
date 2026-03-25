@@ -1,52 +1,64 @@
-// Zed keymap
-//
-// For information on binding keys, see the Zed
-// documentation: https://zed.dev/docs/key-bindings
-//
-// To see the default key bindings run `zed: Open Default Keymap`
-// from the command palette.
 [
   {
     "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
     "bindings": {
-      // Traditional Vim behavior
-      "q": "vim::AnyQuotes",
-      "b": "vim::AnyBrackets",
-
       // mini.ai plugin behavior
-      "Q": "vim::MiniQuotes",
-      "B": "vim::MiniBrackets"
-    }
+      "q": "vim::MiniQuotes",
+      "b": "vim::MiniBrackets",
+    },
   },
   {
     "context": "VimControl && !menu",
     "bindings": {
-      // Put key bindings here if you want them to work in normal & visual mode.
+      "space e": "pane::RevealInProjectPanel",
       "space space": "file_finder::Toggle",
-      "space e": "pane::RevealInProjectPanel"
-    }
-  },
-  {
-    "context": "vim_mode == normal && !menu",
-    "bindings": {
-      "shift-y": ["workspace::SendKeystrokes", "y $"] // Use neovim's yank behavior: yank to end of line.
-    }
+      "space f f": "file_finder::Toggle",
+      "space f g": "workspace::NewSearch",
+      "space f s": "outline::Toggle",
+      "space f b": "tab_switcher::ToggleAll",
+      "space f p": "projects::OpenRecent",
+      "space g g": "git_panel::Toggle",
+      "space g d": "git::Diff",
+      "space t a": "agent::Toggle",
+      "space t o": "outline_panel::Toggle",
+      "space t d": "debug_panel::Toggle",
+      "space t r": "vim::ToggleRegistersView",
+      "space s d": "diagnostics::Deploy",
+      "space s f d": "diagnostics::DeployCurrentFile",
+      "ctrl-x": "workspace::ToggleAllDocks",
+    },
   },
   {
     "context": "vim_mode == insert",
     "bindings": {
-      "j k": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
-      "k j": "vim::NormalBefore", // In insert mode, make kj escape to normal mode.
-      "j j": "vim::NormalBefore" // In insert mode, make jj escape to normal mode.
+      "j k": "vim::NormalBefore",
+      "alt-h": "editor::MoveLeft",
+      "alt-l": "editor::MoveRight",
+    },
+  },
+  {
+    "context": "vim_mode == normal && !menu",
+    "bindings": {
+      "shift-y": [
+        "workspace::SendKeystrokes",
+        "y $"
+      ],
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward",
+    }
+  },
+  {
+    "context": "vim_mode == visual && !menu",
+    "bindings": {
+      "shift-s": "vim::PushAddSurrounds",
+      "shift-x": "vim::Exchange",
     }
   },
   {
     "context": "EmptyPane || SharedScreen",
     "bindings": {
-      // Put key bindings here (in addition to the context above) if you want them to
       // work when no editor exists.
-      "space space": "file_finder::Toggle"
-    }
+    },
   },
   {
     "context": "Editor && vim_mode == normal && !menu",
@@ -55,10 +67,9 @@
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
-
       "shift-h": "pane::ActivatePreviousItem",
-      "shift-l": "pane::ActivateNextItem"
-    }
+      "shift-l": "pane::ActivateNextItem",
+    },
   },
   {
     "context": "Dock",
@@ -67,60 +78,65 @@
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
-
-      "space e": "workspace::ToggleRightDock"
-    }
+      "space e": "workspace::ToggleRightDock",
+      "ctrl-x": "workspace::ToggleAllDocks",
+    },
   },
   {
-    "context": "Editor && vim_mode == insert",
+    "context": "Editor && vim_mode == insert && !menu",
     "bindings": {
+      "ctrl-s": "workspace::Save",
       "ctrl-c": "editor::Copy",
-      // "ctrl-x": "editor::Cut",
+      "ctrl-x": "editor::Cut",
       "ctrl-v": "editor::Paste",
       "ctrl-z": "editor::Undo",
       "ctrl-a": "editor::SelectAll",
-      "ctrl-o": "workspace::Open"
-    }
+      "ctrl-o": "workspace::Open",
+      "ctrl-f": "buffer_search::Deploy"
+    },
   },
   {
     "context": "Picker > Editor",
     "bindings": {
-      "ctrl-y": "picker::ConfirmCompletion"
-    }
+      "ctrl-y": "picker::ConfirmCompletion",
+    },
   },
   {
     "context": "(ProjectPanel && not_editing)",
     "bindings": {
       "a": "project_panel::NewFile",
-      "shift-a": "project_panel::NewDirectory"
+      "shift-a": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Delete",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      // Close project panel as project file panel on the right
+      "q": "workspace::ToggleRightDock",
+    },
+  },
+  {
+    "context": "(Editor && edit_prediction)",
+    "bindings": {
+      "tab": null
     }
   },
   {
-    "context": "VimControl && !menu && vim_mode != operator",
+    "context": "(Editor && edit_prediction_conflict)",
     "bindings": {
-      "w": "vim::NextSubwordStart",
-      "b": "vim::PreviousSubwordStart",
-      "e": "vim::NextSubwordEnd",
-      "g e": "vim::PreviousSubwordEnd"
+      "alt-y": "editor::AcceptEditPrediction"
     }
   },
   {
-    "context": "vim_mode == visual",
+    "context": "(Editor && edit_prediction)",
     "bindings": {
-      "shift-s": "vim::PushAddSurrounds"
+      "alt-l": "editor::AcceptEditPrediction"
     }
   },
   {
-    "context": "vim_mode == normal || vim_mode == visual",
+    "context": "(Editor && edit_prediction_conflict)",
     "bindings": {
-      "s": "vim::PushSneak",
-      "shift-s": "vim::PushSneakBackward"
+      "alt-l": null
     }
   },
-  {
-    "context": "vim_mode == visual",
-    "bindings": {
-      "shift-x": "vim::Exchange"
-    }
-  }
 ]
