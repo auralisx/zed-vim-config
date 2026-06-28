@@ -32,6 +32,7 @@
     "context": "vim_mode == insert",
     "bindings": {
       "j k": "vim::NormalBefore",
+      "k j": "vim::NormalBefore",
       "alt-h": "editor::MoveLeft",
       "alt-l": "editor::MoveRight",
     },
@@ -85,7 +86,6 @@
   {
     "context": "Editor && vim_mode == insert && !menu",
     "bindings": {
-      "ctrl-s": "workspace::Save",
       "ctrl-c": "editor::Copy",
       "ctrl-x": "editor::Cut",
       "ctrl-v": "editor::Paste",
@@ -122,21 +122,16 @@
     }
   },
   {
-    "context": "(Editor && edit_prediction_conflict)",
+    "context": "(Editor && (edit_prediction && (showing_completions || in_leading_whitespace)))",
     "bindings": {
-      "alt-y": "editor::AcceptEditPrediction"
+      "ctrl-y": "editor::AcceptEditPrediction"
+      // "alt-l": null
     }
   },
   {
     "context": "(Editor && edit_prediction)",
     "bindings": {
-      "alt-l": "editor::AcceptEditPrediction"
-    }
-  },
-  {
-    "context": "(Editor && edit_prediction_conflict)",
-    "bindings": {
-      "alt-l": null
+      "ctrl-l": "editor::AcceptEditPrediction"
     }
   },
 ]
